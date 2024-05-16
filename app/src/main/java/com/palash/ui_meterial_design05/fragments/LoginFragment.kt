@@ -14,14 +14,18 @@ import com.palash.ui_meterial_design05.R
 import com.palash.ui_meterial_design05.databinding.FragmentLoginBinding
 import com.palash.ui_meterial_design05.model.login.request.LoginRequest
 import com.palash.ui_meterial_design05.utils.NetworkResult
+import com.palash.ui_meterial_design05.utils.TokenManager
 import com.palash.ui_meterial_design05.view_model.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val loginViewModel by viewModels<LoginViewModel>()
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +54,9 @@ class LoginFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 }
                 is NetworkResult.Success -> {
-                    Log.d("Token", it.data!!.token)
+                    //save token
+                    tokenManager.saveToken(it.data!!.token)
+                    //Log.d("Token", )
                     findNavController().navigate(R.id.action_loginFragment_to_dashFragment)
                 }
                 is NetworkResult.Error -> {

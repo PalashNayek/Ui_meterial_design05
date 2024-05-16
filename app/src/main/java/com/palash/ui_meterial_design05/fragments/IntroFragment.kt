@@ -9,13 +9,18 @@ import androidx.navigation.fragment.findNavController
 import com.palash.ui_meterial_design05.R
 import com.palash.ui_meterial_design05.databinding.FragmentIntroBinding
 import com.palash.ui_meterial_design05.databinding.FragmentLoginBinding
+import com.palash.ui_meterial_design05.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class IntroFragment : Fragment() {
 
     private var _binding: FragmentIntroBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +33,11 @@ class IntroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        if (tokenManager.getToken() != null) {
+            findNavController().navigate(R.id.action_introFragment_to_dashFragment)
+        }
 
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_introFragment_to_loginFragment)
@@ -42,6 +52,5 @@ class IntroFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

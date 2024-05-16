@@ -16,6 +16,11 @@
         <action
             android:id="@+id/action_introFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_dashFragment"
+            app:destination="@id/dashFragment"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
